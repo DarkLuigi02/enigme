@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 
-public class enigme {
+public class Enigme {
 
     public static void init(String[][] plateau){
         for (int i=0; i< plateau.length;i++){
