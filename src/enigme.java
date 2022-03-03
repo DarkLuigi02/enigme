@@ -3,13 +3,11 @@ import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 
 public class enigme {
 
-    public static void increment(int valeur){valeur++;}
-
     public static void init(String[][] plateau){
         for (int i=0; i< plateau.length;i++){
             for (int j=0; j<plateau.length;j++){
                 if (Math.random()<=Math.random()){
-                    plateau[i][j]=" ";
+                    plateau[i][j]="'";
                 }else{
                 plateau[i][j]="*";
                 }
@@ -17,12 +15,12 @@ public class enigme {
         }
     }
     public static void initCoordonnées(String[][] plateau){
-        int tours =1;
+        int tours =0;
         int y = 0,x=0;
         boolean fin=false;
         init(plateau);
         while(!fin){
-            increment(tours);
+            tours++;
             sortirJeu(plateau);
             System.out.println("Veuillez Saisir x (entre 0 et "+ (plateau.length-1)+")");
             x=saisirXY(plateau);
@@ -37,8 +35,8 @@ public class enigme {
         boolean bool=false;
         for (int i=0; i< plateau.length;i++){
             for (int j=0; j<plateau.length;j++){
-                if (plateau[i][j]=="*"){
-                    verifier(bool);
+                if (plateau[i][j]==("*")){
+                    bool=true;
                 }
             }
         }
@@ -49,10 +47,6 @@ public class enigme {
         };
     }
 
-    private static boolean verifier(boolean bool) {
-        return bool=true;
-    }
-
     public static void sortirJeu(String[][] plateau) {
         for (int i=0; i< plateau.length;i++){
             for (int j=0; j<plateau.length;j++){
@@ -61,153 +55,66 @@ public class enigme {
             System.out.println();
         }
     }
-    public static Integer voisin(String[][] plateau, Integer x, Integer y){
-        Integer vivant=0;
+    public static void voisin(String[][] plateau, Integer x, Integer y){
         if (x==0){
             if (y==0){
-                if(plateau[y][x+1].equals("*")){
-                    ;
-                }else{}
-                if(plateau[y+1][x].equals("*")){
-                    vivant++;
-                }else{}
-                if(plateau[y+1][x+1].equals("*")){
-                    vivant++;
-                }else{}
-            }else if (y==plateau.length){
-                if(plateau[y][x+1].equals("*")){
-                    vivant++;
-                }else{}
-                if(plateau[y+1][x].equals("*")){
-                    vivant++;
-                }else{}
-                if(plateau[y+1][x+1].equals("*")){
-                    vivant++;
-                }else{}
-            }else{
-                if(plateau[y][x+1].equals("*")){
-                    vivant++;
-                }else{}
-                if(plateau[y+1][x].equals("*")){
-                    vivant++;
-                }else{}
-                if(plateau[y+1][x-1].equals("*")){
-                    vivant++;
-                }else{}
-                if(plateau[y+1][x+1].equals("*")){
-                    vivant++;
-                }else{}
-                if(plateau[y][x-1].equals("*")){
-                    vivant++;
-                }else{}
+                verifier(plateau,x+1,y);
+                verifier(plateau,x,y+1);
+                verifier(plateau,x+1,y+1);
+            }
+            else if(y==plateau.length){
+                verifier(plateau,x+1,y);
+                verifier(plateau,x,y-1);
+                verifier(plateau,x+1,y-1);
+            }
+            else{
+                verifier(plateau,x+1,y);
+                verifier(plateau,x,y+1);
+                verifier(plateau,x,y-1);
+                verifier(plateau,x+1,y+1);
+                verifier(plateau,x+1,y-1);
             }
         }
         else if (x==plateau.length){
             if (y==0){
-                if(plateau[y][x+1].equals("*")){
-                    vivant++;
-                }else{}
-                if(plateau[y+1][x].equals("*")){
-                    vivant++;
-                }else{}
-                if(plateau[y+1][x+1].equals("*")){
-                    vivant++;
-                }else{}
-            }else if (y==plateau.length){
-                if (y==0){
-                    if(plateau[y][x+1].equals("*")){
-                        vivant++;
-                    }else{}
-                    if(plateau[y+1][x].equals("*")){
-                        vivant++;
-                    }else{}
-                    if(plateau[y+1][x+1].equals("*")){
-                        vivant++;
-                    }else{}
-                }else if (y==plateau.length){
-                    if(plateau[y][x+1].equals("*")){
-                        vivant++;
-                    }else{}
-                    if(plateau[y+1][x].equals("*")){
-                        vivant++;
-                    }else{}
-                    if(plateau[y+1][x+1].equals("*")){
-                        vivant++;
-                    }else{}
-                }else{
-                    if(plateau[y][x-1].equals("*")){
-                        vivant++;
-                    }else{}
-                    if(plateau[y-1][x].equals("*")){
-                        vivant++;
-                    }else{}
-                    if(plateau[y-1][x-1].equals("*")){
-                        vivant++;
-                    }else{}
-                    if(plateau[y+1][x-1].equals("*")){
-                        vivant++;
-                    }else{}
-                    if(plateau[y+1][x].equals("*")){
-                        vivant++;
-                    }else{}
-                }
-            }else{
-                if(plateau[y][x-1].equals("*")){
-                    vivant++;
-                }else{}
-                if(plateau[y-1][x].equals("*")){
-                    vivant++;
-                }else{}
-                if(plateau[y-1][x-1].equals("*")){
-                    vivant++;
-                }else{}
-                if(plateau[y+1][x-1].equals("*")){
-                    vivant++;
-                }else{}
-                if(plateau[y+1][x].equals("*")){
-                    vivant++;
-                }else{}
+                verifier(plateau,x-1,y);
+                verifier(plateau,x,y+1);
+                verifier(plateau,x-1,y+1);
+            }
+            else if (y==plateau.length){
+                verifier(plateau,x-1,y);
+                verifier(plateau,x,y-1);
+                verifier(plateau,x-1,y-1);
+            }
+            else{
+                verifier(plateau,x-1,y);
+                verifier(plateau,x,y+1);
+                verifier(plateau,x,y-1);
+                verifier(plateau,x-1,y+1);
+                verifier(plateau,x-1,y-1);
             }
         }
         else{
-            if(plateau[y-1][x-1].equals("*")){
-                vivant++;
-            }else{}
-            if(plateau[y-1][x].equals("*")){
-                vivant++;
-            }else{}
-            if(plateau[y-1][x+1].equals("*")){
-                vivant++;
-            }else{}
-            if(plateau[y+1][x-1].equals("*")){
-                vivant++;
-            }else{}
-            if(plateau[y+1][x].equals("*")){
-                vivant++;
-            }else{}
-            if(plateau[y+1][x+1].equals("*")){
-                vivant++;
-            }else{}
-            if(plateau[y-1][x].equals("*")){
-                vivant++;
-            }else{}
-            if(plateau[y+1][x].equals("*")){
-                vivant++;}
-            else{}
+            verifier(plateau,x,y-1);
+            verifier(plateau,x,y+1);
+            verifier(plateau,x-1,y);
+            verifier(plateau,x+1,y);
+            verifier(plateau,x-1,y-1);
+            verifier(plateau,x+1,y-1);
+            verifier(plateau,x-1,y+1);
+            verifier(plateau,x+1,y+1);
         }
-        return vivant;
     }
 
-    public static void transfer(String[][] plateau1, String[][] plateau2){
-        for (int i=0; i< plateau2.length;i++){
-            for (int j=0; j<plateau2.length;j++){
-                plateau2[i][j]=plateau1[i][j];
-            }
+    public static void verifier(String[][] plateau, Integer x, Integer y){
+        if(plateau[y][x]==("*")){
+            plateau[y][x]=("'");
         }
+        else{plateau[y][x]=("*");}
     }
+
     public static void générationSuivante(String[][] plateau, int x , int y){
         String temp[][]=new String[10][10];
-        transfer(temp,plateau);
         voisin(plateau,x,y);
     }
 
@@ -234,9 +141,9 @@ public class enigme {
         Boolean finInit;
         System.out.println("Voulez-vous continuer ? (o/n)");
         fin = input.next();
-        if(fin.equals("o")){
+        if(fin==("o")){
             finInit=false;
-        }else if (fin.equals("n")){
+        }else if (fin==("n")){
             finInit=true;
         }else {
             System.out.println("Erreur dans la réponse");
@@ -244,6 +151,7 @@ public class enigme {
         }
         return finInit;
     }
+
     public static void main(String[] args) throws InterruptedException {
             String[][] monplateau = new String[10][10];
             afficheTitre();
