@@ -17,9 +17,9 @@ public class Enigme {
     public static void initCoordonnées(String[][] plateau){
         int tours =0;
         int y = 0,x=0;
-        boolean fin=false;
+        boolean fin=true;
         init(plateau);
-        while(!fin){
+        while(fin){
             tours++;
             sortirJeu(plateau);
             System.out.println("Veuillez Saisir x (entre 0 et "+ (plateau.length-1)+")");
@@ -32,6 +32,10 @@ public class Enigme {
             fin=stop();
             }
         }
+        quelfin(plateau,tours);
+    }
+
+    public static void quelfin(String [][] plateau,int tours){
         boolean bool=false;
         for (int i=0; i< plateau.length;i++){
             for (int j=0; j<plateau.length;j++){
@@ -44,8 +48,7 @@ public class Enigme {
             System.out.println("vous avez reussi l'enigme en "+ tours +" tours");
         }else{
             System.out.println("Dommage peut etre une prochaine fois");
-        };
-    }
+        };}
 
     public static void sortirJeu(String[][] plateau) {
         for (int i=0; i< plateau.length;i++){
@@ -142,9 +145,9 @@ public class Enigme {
         System.out.println("Voulez-vous continuer ? (o/n)");
         fin = input.next();
         if(fin==("o")){
-            finInit=false;
-        }else if (fin==("n")){
             finInit=true;
+        }else if (fin==("n")){
+            finInit=false;
         }else {
             System.out.println("Erreur dans la réponse");
             finInit = stop();
